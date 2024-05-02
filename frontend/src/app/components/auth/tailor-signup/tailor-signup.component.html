@@ -1,0 +1,134 @@
+<!-- <div class="container row justify-content-around mx-auto my-5">
+  <div
+    class="col col-sm-10 col-md-8 col-lg-6 p-5 border border-2 border-primary-subtle rounded"
+  >
+    <h2 class="text-center mb-3">
+      <span class="text-primary">Tailor</span> | Sing Up
+    </h2>
+    <hr class="text-primary" /> -->
+<form (ngSubmit)="onSignUp()" #signUpForm="ngForm" (change)="formError = ''">
+  <div class="form-group mb-3">
+    <label for="fullname">Full Name:</label>
+    <input
+      type="fullName"
+      class="form-control"
+      name="fullName"
+      placeholder="Enter Full Name"
+      minlength="5"
+      [(ngModel)]="tailorData.tailorName"
+      required
+      #fullName="ngModel"
+    />
+    <span class="text-danger small" *ngIf="!fullName.valid && fullName.touched"
+      >Full name atleast 5 character long</span
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="description">Discription:</label>
+    <textarea
+      class="form-control"
+      name="discription"
+      placeholder="Write description of your services"
+      minlength="20"
+      [(ngModel)]="tailorData.description"
+      required
+      #discription="ngModel"
+    ></textarea>
+    <span
+      class="text-danger small"
+      *ngIf="!discription.valid && discription.touched"
+      >Full name atleast 20 character long</span
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="coverImage">Cover Image (Optionally- do not touch it):</label>
+    <input
+      type="text"
+      class="form-control"
+      name="coverImage"
+      placeholder="Provide a cover img URL"
+      [(ngModel)]="tailorData.coverUrl"
+    />
+  </div>
+  <div class="form-group mb-3">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      class="form-control"
+      name="email"
+      placeholder="Enter Your Email"
+      [(ngModel)]="tailorData.email"
+      email
+      required
+      #email="ngModel"
+    />
+    <span class="text-danger small" *ngIf="!email.valid && email.touched"
+      >Please enter a valid email</span
+    >
+  </div>
+  <div class="row">
+    <div class="col-sm-6 form-group mb-3">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        placeholder="Choose Password"
+        minlength="8"
+        required
+        [(ngModel)]="tailorData.password"
+        #password="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="!password.valid && password.touched"
+        >Password is not valid.(length must be greater than 8 character)</span
+      >
+    </div>
+    <div class="col-sm-6 form-group mb-3">
+      <label for="password2">Confirm Password:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="password2"
+        placeholder="Confirm Password"
+        required
+        ngModel
+        #password2="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="password.value !== password2.value && password2.touched"
+        >Password doesn't match</span
+      >
+    </div>
+  </div>
+  <div class="d-flex align-items-center mb-5">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!signUpForm.valid"
+    >
+      Sign Up
+    </button>
+    <a
+      (click)="onTitleChange('Customer | SignUp')"
+      style="cursor: pointer"
+      class="ms-auto text-decoration-none mt-auto"
+      >SignUp as Customer</a
+    >
+  </div>
+  <div class="d-flex align-items-center mb-3">
+    <a
+      (click)="onTitleChange('Login')"
+      style="cursor: pointer"
+      class="text-decoration-none mx-auto"
+      >Already Registered? Back to Login</a
+    >
+  </div>
+  <div class="text-danger small text-center" *ngIf="formError !== ''">
+    {{ formError }}
+  </div>
+</form>
+<!-- </div>
+</div> -->

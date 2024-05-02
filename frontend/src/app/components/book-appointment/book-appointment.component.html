@@ -1,0 +1,69 @@
+<div class="container justify-content-center mx-auto my-3 pb-3">
+  <div
+    class="row border-top border border-1 shadow border-primary-subtle overflow-hidden p-3 vh-80"
+  >
+    <div
+      class="border border-top-0 border-start-0 border-end-0 border-2 pb-2"
+      style="background-color: rgba(147, 145, 145, 0.075)"
+    >
+      <i
+        class="bi bi-caret-left-fill text-primary fst-italic back-icon h-100 my-auto"
+        style="cursor: pointer"
+        (click)="goBack()"
+        >Back</i
+      >
+    </div>
+    <div
+      class="col-md-6 border border-3 border-top-0 border-start-0 border-bottom-0"
+    >
+      <div class="pt-3 px-3">
+        <h5>{{ categoryData.categoryName }}</h5>
+        <hr />
+        <p>
+          {{ categoryData.details }}
+        </p>
+      </div>
+      <div class="text-center">
+        <img
+          src="../../../assets/tailorshop-1.jpg"
+          alt="category"
+          class="mx-auto bg-secondary"
+          style="max-height: 300px; max-width: 400px; content: fit"
+        />
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="pt-3 px-3">
+        <h5>Book An Appointment Now</h5>
+        <hr />
+        <form (ngSubmit)="bookAppointment()">
+          <div class="form-group mb-3">
+            <label for="email">Choose a prefered date:</label>
+            <input
+              type="date"
+              class="form-control"
+              name="date"
+              required
+              [(ngModel)]="appointmentDate"
+              [min]="currentDate"
+            />
+          </div>
+
+          <div class="d-flex align-items-center mb-5">
+            <button type="submit" class="btn btn-primary">Book</button>
+          </div>
+        </form>
+
+        <div
+          class="p-2 fst-italic"
+          [ngClass]="
+            bookedSuccessfully ? 'text-success fw-bold' : 'text-danger'
+          "
+        >
+          {{ message }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

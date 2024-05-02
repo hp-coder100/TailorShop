@@ -1,0 +1,8 @@
+.back-icon {
+  font-size: 24px;
+}
+
+.back-icon:hover {
+  background-color: rgba(132, 132, 132, 0.306);
+  border-radius: 50%;
+}

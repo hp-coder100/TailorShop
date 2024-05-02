@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #85b6ff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1b8fe3;
+}

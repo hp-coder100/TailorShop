@@ -1,0 +1,34 @@
+<div
+  class="container-fluid row align-items-center h-100 mx-auto p-md-3 pt-3 landing_page"
+>
+  <div
+    class="jumbotron text-white text-center h-100 align-items-center d-flex"
+    style="background-color: rgba(0, 0, 0, 0.667)"
+  >
+    <div class="">
+      <h1 class="display-4">
+        Welcome to Our
+        <span class="text-primary fw-bolder">Tailoring</span> Shop!
+      </h1>
+      <p class="lead mx-auto fst-italic">
+        Experience the best tailoring service with perfect fitting. Explore our
+        outfit categories like kurta-pajama, pant-shirt, suits, and more.
+      </p>
+      <hr class="my-4" />
+      <h4 class="w-75 mx-auto fw-lighter">
+        Book an appointment for measurement, provide your clothing preferences,
+        and get an estimated cost instantly. Visit us on your appointment date
+        and give your measurements. Track your order status right from our
+        platform.
+      </h4>
+      <a
+        class="btn btn-primary btn-lg mt-5"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        role="button"
+        *ngIf="!isLoggedIn"
+        >Book an Appointment</a
+      >
+    </div>
+  </div>
+</div>

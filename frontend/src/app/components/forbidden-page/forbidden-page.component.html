@@ -1,0 +1,18 @@
+<div class="container mx-auto row align-items-center justify-content-center">
+  <div class="mt-5">
+    <h2 class="text-danger">Error : 403</h2>
+    <h3 class="text-secondary">Request Page Forbidden</h3>
+    <button
+      [routerLink]="
+        userType === 'ROLE_USER'
+          ? ['/customerHome']
+          : userType === 'ROLE_TAILOR'
+          ? ['/tailorHome']
+          : ['']
+      "
+      class="btn btn-primary"
+    >
+      Go Back to Home
+    </button>
+  </div>
+</div>

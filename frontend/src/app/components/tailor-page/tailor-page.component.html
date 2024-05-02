@@ -1,0 +1,198 @@
+<div class="container mx-auto my-3 pb-5">
+  <div
+    class="row justify-content-center align-items-center d-flexd border border-primary-subtle shadow"
+  >
+    <a
+      aria-current="page"
+      data-bs-toggle="modal"
+      data-bs-target="#categoryEditModal"
+      style="cursor: pointer"
+      hidden
+      #openModel
+    ></a>
+    <img
+      [src]="tailor.coverUrl"
+      class="col-sm-6 card-img py-3"
+      style="max-width: 400px; max-height: 300px"
+      alt="..."
+    />
+    <div class="col-md-6 m-3">
+      <h3>{{ tailor.tailorName }}</h3>
+      <p class="">
+        {{ tailor.description }}
+        <i
+          *ngIf="asTailor"
+          class="bi bi-pencil-square"
+          (click)="editDescriptionModal()"
+        ></i>
+      </p>
+      <div class="d-flex">
+        <button
+          class="btn btn-primary w-fit"
+          (click)="showCategory = !showCategory"
+        >
+          {{ showCategory ? "Hide Categories" : "Show Categories" }}
+        </button>
+        <button
+          *ngIf="asTailor"
+          class="btn btn-primary ms-3"
+          (click)="addCategoryModel()"
+        >
+          Add Category
+        </button>
+      </div>
+    </div>
+    <hr class="my-3" />
+    <div *ngIf="showCategory" class="row align-items-center">
+      <div
+        *ngIf="categories.length === 0"
+        class="text-center text-secondary fw-bold my-3"
+      >
+        No Category Available
+      </div>
+      <div
+        *ngFor="let category of categories; index as i"
+        class="col-sm-6 col-md-4 p-3"
+      >
+        <div class="card">
+          <img
+            [src]="category.imageUrl"
+            class="card-img-top"
+            alt="cateogory"
+            style="height: 250px"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ category.categoryName }}</h5>
+            <p class="card-text lh-sm overflow-hidden" style="height: 3.75rem">
+              {{ category.details }}
+            </p>
+            <button
+              *ngIf="!asTailor"
+              [routerLink]="[
+                '/category/bookAppointment',
+                'tailor',
+                category.shopId,
+                'category',
+                category.categoryId
+              ]"
+              class="btn btn-outline-primary w-100"
+            >
+              Book Appointment
+            </button>
+            <div class="d-flex">
+              <button
+                *ngIf="asTailor"
+                (click)="updateCategoryModel(category)"
+                class="btn btn-outline-info w-100 m-1"
+              >
+                Edit
+              </button>
+              <button
+                *ngIf="asTailor"
+                (click)="deleteCategory(category.categoryId)"
+                class="btn btn-outline-danger w-100 m-1"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="categoryEditModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-labelledby="categoryEditModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="categoryEditModal">
+          {{ modelTitle }}
+        </h1>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          #closeButton
+        ></button>
+      </div>
+      <div class="modal-body w-fit">
+        <form
+          *ngIf="modelTitle !== 'Update Description'"
+          (ngSubmit)="submitCategory()"
+          class="form-group"
+          #cateogoryForm="ngForm"
+        >
+          <div class="form-group mb-3">
+            <label for="categoryName">Category Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="categoryName"
+              [(ngModel)]="categoryToSubmit.categoryName"
+              email
+              required
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="categoryDiscription">Category Discription:</label>
+            <textarea
+              type="text"
+              class="form-control"
+              name="categoryDiscription"
+              minlength="20"
+              required
+              [(ngModel)]="categoryToSubmit.details"
+            ></textarea>
+          </div>
+          <div class="form-group mb-3">
+            <label for="categoryImage">Category Image:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="categoryImage"
+              [(ngModel)]="categoryToSubmit.imageUrl"
+            />
+          </div>
+          <div class="d-flex align-items-center mb-5">
+            <button type="submit" class="btn btn-primary">
+              {{ modelTitle === "Update Category" ? "Update" : "Add" }}
+            </button>
+          </div>
+          <div class="text-danger text-center text-sm">{{ formError }}</div>
+        </form>
+
+        <form
+          (ngSubmit)="updateDescription()"
+          *ngIf="modelTitle === 'Update Description'"
+        >
+          <div class="form-group mb-3">
+            <label for="shopDescription">Discription:</label>
+            <textarea
+              type="text"
+              class="form-control"
+              name="shopDescription"
+              minlength="20"
+              required
+              [(ngModel)]="tailor.description"
+            ></textarea>
+          </div>
+          <div class="d-flex align-items-center mb-5">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

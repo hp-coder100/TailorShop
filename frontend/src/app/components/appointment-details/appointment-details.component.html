@@ -1,0 +1,300 @@
+<div class="container mx-auto">
+  <div class="sticky-top bg-white shadow rounded mt-3">
+    <div class="d-flex align-items-center px-3 py-2">
+      <i
+        class="bi bi-caret-left-fill text-primary back-icon"
+        (click)="goBack()"
+      ></i>
+      <h5 class="text-primary text-center px-4">Appointment Details</h5>
+    </div>
+  </div>
+  <div>
+    <div class="rounded-4 row border-top overflow-hidden p-1">
+      <div
+        class="col-md-6 border border-3 border-top-0 border-start-0 border-bottom-0"
+      >
+        <div class="pt-3 px-3">
+          <h5>{{ category.categoryName }}</h5>
+          <hr />
+          <p>
+            {{ category.details }}
+          </p>
+        </div>
+        <div class="text-center">
+          <img
+            src="../../../assets/tailorshop-1.jpg"
+            alt="category"
+            class="mx-auto bg-secondary"
+            style="max-height: 300px; max-width: 400px; content: fit"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pt-3 px-3">
+          <h5>Customer Details</h5>
+          <hr />
+
+          <output class="form-control mb-3"
+            ><span class="fw-bold">Customer Name : </span>
+            {{
+              customer.customerFirstName + " " + customer.customerLastName
+            }}</output
+          >
+          <output class="form-control mb-3"
+            ><span class="fw-bold">Requested Date : </span>
+            {{ appointment.appointmentDate | date : "fullDate" }}</output
+          >
+          <output class="form-control mb-3"
+            ><span class="fw-bold">Appointment Status : </span>
+            <span
+              class="fw-bold"
+              [ngStyle]="{
+                color:
+                  appointment.status === 'Scheduled'
+                    ? 'blue'
+                    : appointment.status === 'Pending'
+                    ? 'orange'
+                    : appointment.status === 'Completed'
+                    ? 'green'
+                    : 'red'
+              }"
+              >{{ appointment.status | uppercase }}</span
+            ></output
+          >
+        </div>
+        <div
+          class="text-center d-flex row justify-content-around align-items-center p-2"
+        >
+          <div class="d-flex justify-content-around mb-3">
+            <button
+              class="btn btn-success"
+              (click)="updateAppointment('Scheduled')"
+              *ngIf="
+                appointment.status !== 'Scheduled' &&
+                appointment.status !== 'Cancelled'
+              "
+            >
+              Accept
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="updateAppointment('Cancelled')"
+              *ngIf="appointment.status !== 'Cancelled'"
+            >
+              Decline
+            </button>
+            <button
+              class="btn btn-secondary"
+              *ngIf="
+                appointment.status !== 'Scheduled' &&
+                appointment.status !== 'Cancelled'
+              "
+              (click)="changeAppointmentDate()"
+            >
+              Change Date
+            </button>
+          </div>
+          <div class="d-flex justify-content-around mb-3">
+            <button
+              class="btn btn-info text-white"
+              (click)="recordMeasurement()"
+              *ngIf="appointment.status === 'Scheduled'"
+            >
+              Record Measurement
+            </button>
+            <button
+              class="btn btn-primary"
+              *ngIf="appointment.status === 'Scheduled'"
+              (click)="recordPayment()"
+            >
+              Record Payment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row mt-3">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" style="cursor: pointer">
+          <a
+            class="nav-link"
+            [ngClass]="showDetails === 'Payment' ? 'active' : ''"
+            aria-current="page"
+            (click)="loadPaymentTab()"
+            >Payment Details</a
+          >
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a
+            class="nav-link"
+            [ngClass]="showDetails === 'Measurement' ? 'active' : ''"
+            (click)="loadMeasurementTab()"
+            >Measurement Details</a
+          >
+        </li>
+      </ul>
+      <div
+        class="col-md-6 overflow-y-scroll"
+        style="height: 400px"
+        *ngIf="showDetails === 'Payment'"
+      >
+        <div *ngIf="paymentDetails.length === 0" class="p-3 text-secondary">
+          No Payments Found
+        </div>
+        <div
+          *ngFor="let payment of paymentDetails"
+          class="border border-bottom-1 p-2 mb-2 d-flex justify-content-between"
+        >
+          {{ payment.paymentDate | date : "fullDate" }}
+          <span>{{ payment.amount | currency : "INR" }}</span>
+          <span
+            class="fw-bold"
+            [ngStyle]="{
+              color: payment.status === 'Done' ? 'green' : 'orange'
+            }"
+            >{{ payment.status | uppercase }}</span
+          >
+        </div>
+      </div>
+      <div
+        class="col-md-6 overflow-y-scroll"
+        style="height: 400px"
+        *ngIf="showDetails === 'Measurement'"
+      >
+        <div *ngIf="paymentDetails.length === 0" class="p-3 text-secondary">
+          No Measurement Found
+        </div>
+
+        <div
+          *ngFor="let measure of measurementDetaisl"
+          class="border border-bottom-1 p-2 mb-2 d-flex justify-content-between"
+        >
+          {{ measure.details }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  class="hidden"
+  data-bs-toggle="modal"
+  data-bs-target="#appointmentDetailsModel"
+  #buttonModelShow
+></button>
+<div
+  class="modal fade"
+  id="appointmentDetailsModel"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-labelledby="appointmentDetailsModelLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="appointmentDetailsModelLabel">
+          {{ modelTitle }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          #closeButton
+        ></button>
+      </div>
+      <div class="modal-body w-fit">
+        <div *ngIf="modelTitle === 'Change Date'">
+          <form (ngSubmit)="updateAppointmentDate()" #changeDateForm="ngForm">
+            <div class="form-group mb-3">
+              <label for="email">Choose date:</label>
+              <input
+                type="date"
+                class="form-control"
+                name="date"
+                required
+                [(ngModel)]="updatedDate"
+                [min]="currentDate"
+              />
+            </div>
+
+            <div class="d-flex align-items-center mb-5">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!changeDateForm.valid"
+              >
+                Update Date
+              </button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="modelTitle === 'Record Measurement'">
+          <form (ngSubmit)="saveMeasurementDetails()" #measurementForm="ngForm">
+            <div class="form-group mb-3">
+              <label for="email"
+                >Enter Measurement Details(Min 20 character):
+              </label>
+              <textarea
+                type="text"
+                class="form-control"
+                name="measurementDetails"
+                required
+                minlength="20"
+                [(ngModel)]="measurementDetails"
+              ></textarea>
+            </div>
+
+            <div class="d-flex align-items-center mb-5">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="!measurementForm.valid"
+              >
+                Save Details
+              </button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="modelTitle === 'Record Payment'">
+          <form (ngSubmit)="savePaymentDetails()" #paymentForm="ngForm">
+            <div class="form-group mb-3">
+              <label for="email">Enter Amount (RS 100-10000000): </label>
+              <input
+                type="number"
+                class="form-control"
+                min="100"
+                max="10000000"
+                name="measurementDetails"
+                required
+                [(ngModel)]="paymentAmount"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <input
+                type="checkbox"
+                name="measurementDetails"
+                [(ngModel)]="paymentRecieved"
+              />
+              <label for="measurementDetails">Payment Recieved </label>
+            </div>
+
+            <div class="d-flex align-items-center mb-5">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="paymentAmount === 0 || !paymentForm.valid"
+              >
+                Save Details
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

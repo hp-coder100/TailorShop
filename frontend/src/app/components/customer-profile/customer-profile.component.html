@@ -1,0 +1,77 @@
+<div class="container shadow p-3 mt-3 border border-1 border-primary">
+  <div class="sticky-top">
+    <div class="align-items-center px-3">
+      <h5 class="text-primary text-center px-4">Profie Details</h5>
+      <hr />
+    </div>
+  </div>
+  <form
+    (ngSubmit)="onUpdate()"
+    class="col-sm-6 mx-auto mt-3"
+    #profileForm="ngForm"
+    (change)="formError = ''"
+  >
+    <div class="form-group mb-3">
+      <output class="form-control w-100" name="firstName" minlength="3"
+        >Full Name :
+        {{
+          customerData.customerFirstName + " " + customerData.customerLastName
+        }}
+      </output>
+    </div>
+    <div class="form-group mb-3">
+      <output class="form-control">Email : {{ customerData.email }}</output>
+    </div>
+    <div class="form-group mb-3">
+      <label for="address">Address:</label>
+      <textarea
+        class="form-control"
+        name="address"
+        placeholder="Enter Full Address"
+        minlength="20"
+        [(ngModel)]="customerData.address"
+        [disabled]="!editDetails"
+        required
+        #address="ngModel"
+      ></textarea>
+    </div>
+    <div class="form-group mb-3">
+      <label for="phone">Phone:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="phone"
+        placeholder="Enter Phone Number"
+        [(ngModel)]="customerData.phone"
+        pattern="[6|7|8|9][0-9]{9}"
+        required
+        [disabled]="!editDetails"
+        #phone="ngModel"
+      />
+      <span class="text-danger small" *ngIf="!phone.valid && phone.touched"
+        >Please enter a valid 10 digit phone number</span
+      >
+    </div>
+
+    <div class="d-flex align-items-center mb-3">
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+        [disabled]="!profileForm.valid"
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        (click)="editDetails = true"
+        class="btn btn-outline-primary ms-2"
+      >
+        Edit details
+      </button>
+    </div>
+
+    <div class="text-danger small text-center" *ngIf="formError !== ''">
+      {{ formError }}
+    </div>
+  </form>
+</div>

@@ -1,0 +1,47 @@
+<div class="container vh-100">
+  <div
+    class="sticky-top bg-white shadow rounded mt-3 border border-start-0 border-end-0 border-top-0 border-2 border-secondary p-2"
+  >
+    <h5 class="text-secondary fw-bold text-center">
+      Select a Tailor to Avail the services and explore the categories they
+      offer.
+    </h5>
+  </div>
+  <div
+    class="row justify-content-around mx-auto overflow-y-scroll"
+    style="max-height: 80vh"
+  >
+    <div
+      *ngFor="let tailor of tailors; index as i"
+      class="col-sm-6 col-md-4 mb-3"
+    >
+      <div class="card shadow" style="min-height: 400px">
+        <img
+          [src]="
+            tailor.coverUrl
+              ? tailor.coverUrl
+              : '../../../../assets/tailorshop-7.jpg'
+          "
+          class="card-img-top img-fluid"
+          [alt]="tailor.coverUrl"
+          style="height: 250px"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ tailor.tailorName }}</h5>
+          <p
+            class="card-text text-wrap lh-sm overflow-hidden"
+            style="height: 3.75rem"
+          >
+            {{ tailor.description }}
+          </p>
+
+          <a
+            [routerLink]="['/tailor', tailor.shopId]"
+            class="btn btn-outline-primary align-bottom"
+            >Visit Shop</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

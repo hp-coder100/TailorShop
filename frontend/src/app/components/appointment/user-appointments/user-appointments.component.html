@@ -1,0 +1,56 @@
+<div class="container my-3 pb-3 shadow">
+  <div
+    class="sticky-top bg-white rounded d-flex align-items-center border border-top-0 border-start-0 border-end-0 border-2"
+  >
+    <h5 class="px-3 py-2 text-primary">My appointments</h5>
+    <span class="font-sm text-secondary">
+      (Please select an appointment to view details)</span
+    >
+    <hr />
+  </div>
+
+  <div class="row justify-content-center mb-3 mx-auto">
+    <div
+      *ngIf="appointments.length === 0"
+      class="p-3 text-secondary text-center fw-bold mt-5"
+    >
+      No Appointments Found
+    </div>
+    <ul class="col-md-6 list-group overflow-y-scroll" style="max-height: 500px">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-start"
+        *ngFor="let appointment of appointments; index as i"
+        (click)="selectedAppointment = appointment"
+      >
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">
+            {{ appointment.appointmentDate | date : "fullDate" }}
+          </div>
+          <p
+            [ngStyle]="{
+              color:
+                appointment.status === 'Scheduled'
+                  ? 'blue'
+                  : appointment.status === 'Pending'
+                  ? 'orange'
+                  : appointment.status === 'Completed'
+                  ? 'green'
+                  : 'red'
+            }"
+          >
+            {{ appointment.status }}
+          </p>
+        </div>
+      </li>
+    </ul>
+    <div
+      class="col-md-6"
+      style="max-height: 500px"
+      *ngIf="selectedAppointment !== undefined"
+    >
+      <app-single-appointment
+        [selectedAppointment]="selectedAppointment"
+      ></app-single-appointment>
+    </div>
+  </div>
+</div>

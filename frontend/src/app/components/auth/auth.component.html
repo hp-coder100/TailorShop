@@ -1,0 +1,45 @@
+<div
+  class="modal fade"
+  id="exampleModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          {{ title }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="title = 'Login'"
+          #closeButton
+        ></button>
+      </div>
+      <div class="modal-body w-fit">
+        <app-login
+          (closeModel)="closeModal()"
+          *ngIf="title === 'Login'"
+          (modelTitle)="onTitleChange($event)"
+        ></app-login>
+        <app-customer-signup
+          *ngIf="title === 'Customer | SignUp'"
+          (modelTitle)="onTitleChange($event)"
+          (closeModel)="closeModal()"
+        ></app-customer-signup>
+        <app-tailor-signup
+          *ngIf="title === 'Tailor | SignUp'"
+          (modelTitle)="onTitleChange($event)"
+          (closeModel)="closeModal()"
+        ></app-tailor-signup>
+      </div>
+    </div>
+  </div>
+</div>

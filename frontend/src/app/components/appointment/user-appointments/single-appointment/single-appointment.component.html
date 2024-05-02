@@ -1,0 +1,24 @@
+<div class="card p-0">
+  <div class="card-header">Appointment Details</div>
+  <img
+    [src]="category.imageUrl"
+    class="img-fluid"
+    style="max-height: 300px"
+    alt="Tailor-Shop Holder"
+  />
+  <div class="card-body">
+    <h5 class="card-title">
+      Appointment Date :
+      {{ selectedAppointment.appointmentDate | date : "fullDate" }}
+    </h5>
+    <p class="card-text">
+      Appointment Status : {{ selectedAppointment.status }}
+    </p>
+    <p>Category Name : {{ category.categoryName }}</p>
+    <a
+      class="btn btn-primary"
+      [routerLink]="['/tailor', selectedAppointment.shopId]"
+      >Visit Tailor Shop</a
+    >
+  </div>
+</div>

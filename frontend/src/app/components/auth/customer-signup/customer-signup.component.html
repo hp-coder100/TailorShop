@@ -1,0 +1,160 @@
+<!-- <div class="container row justify-content-around mx-auto my-5">
+  <div
+    class="col col-sm-10 col-md-8 col-lg-6 p-5 border border-2 border-primary-subtle rounded"
+  >
+    <h2 class="text-center mb-3">
+      <span class="text-primary">Customer</span> | Sing Up
+    </h2>
+    <hr class="text-primary" /> -->
+<form (ngSubmit)="onSignUp()" #signUpForm="ngForm" (change)="formError = ''">
+  <div class="row">
+    <div class="col-sm-6 form-group mb-3">
+      <label for="fullname">Full Name:</label>
+      <input
+        type="firstName"
+        class="form-control"
+        name="firstName"
+        placeholder="Enter First Name"
+        minlength="3"
+        [(ngModel)]="customerData.customerFirstName"
+        required
+        #firstName="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="!firstName.valid && firstName.touched"
+        >FirstName atleast 3 character long</span
+      >
+    </div>
+    <div class="col-sm-6 form-group mb-3">
+      <label for="description">LastName:</label>
+      <input
+        type="lastName"
+        class="form-control"
+        name="lastName"
+        placeholder="Enter Last Name"
+        minlength="3"
+        [(ngModel)]="customerData.customerLastName"
+        required
+        #lastName="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="!lastName.valid && lastName.touched"
+        >Lastname atleast 3 character long</span
+      >
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="address">Address:</label>
+    <textarea
+      class="form-control"
+      name="address"
+      placeholder="Enter Full Address"
+      minlength="20"
+      [(ngModel)]="customerData.address"
+      required
+      #address="ngModel"
+    ></textarea>
+    <span class="text-danger small" *ngIf="!address.valid && address.touched"
+      >Please Enter a valid Full Address</span
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="phone">Phone:</label>
+    <input
+      type="text"
+      class="form-control"
+      name="phone"
+      placeholder="Enter Phone Number"
+      [(ngModel)]="customerData.phone"
+      pattern="[6|7|8|9][0-9]{9}"
+      required
+      #phone="ngModel"
+    />
+    <span class="text-danger small" *ngIf="!phone.valid && phone.touched"
+      >Please enter a valid 10 digit phone number</span
+    >
+  </div>
+  <div class="form-group mb-3">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      class="form-control"
+      name="email"
+      placeholder="Enter Your Email"
+      [(ngModel)]="customerData.email"
+      email
+      required
+      #email="ngModel"
+    />
+    <span class="text-danger small" *ngIf="!email.valid && email.touched"
+      >Please enter a valid email</span
+    >
+  </div>
+  <div class="row">
+    <div class="col-sm-6 form-group mb-3">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        placeholder="Choose Password"
+        minlength="8"
+        required
+        [(ngModel)]="customerData.password"
+        #password="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="!password.valid && password.touched"
+        >Password is not valid.(length must be greater than 8 character)</span
+      >
+    </div>
+    <div class="col-sm-6 form-group mb-3">
+      <label for="password2">Confirm Password:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Confirm Password"
+        name="password2"
+        required
+        ngModel
+        #password2="ngModel"
+      />
+      <span
+        class="text-danger small"
+        *ngIf="password.value !== password2.value && password2.touched"
+        >Password doesn't match</span
+      >
+    </div>
+  </div>
+  <div class="d-flex align-items-center mb-3">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!signUpForm.valid"
+    >
+      Sign Up
+    </button>
+    <a
+      (click)="onTitleChange('Tailor | SignUp')"
+      style="cursor: pointer"
+      class="ms-auto text-decoration-none"
+      >SignUp as Tailor</a
+    >
+  </div>
+  <div class="d-flex align-items-center mb-3">
+    <a
+      (click)="onTitleChange('Login')"
+      style="cursor: pointer"
+      class="text-decoration-none mx-auto"
+      >Already Registered? Back to Login</a
+    >
+  </div>
+  <div class="text-danger small text-center" *ngIf="formError !== ''">
+    {{ formError }}
+  </div>
+</form>
+<!-- </div>
+</div> -->

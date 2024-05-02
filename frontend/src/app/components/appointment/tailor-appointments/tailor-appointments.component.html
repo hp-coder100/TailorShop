@@ -1,0 +1,65 @@
+<div class="container h-80 mt-3">
+  <div class="sticky-top bg-white shadow rounded mt-3 d-flex px-3 py-2">
+    <h5 class="text-primary">Manage Appointments</h5>
+
+    <form
+      class="d-flex form-group col-sm-6 ms-auto"
+      (ngSubmit)="searchAppointment()"
+      role="search"
+    >
+      <input
+        class="form-control me-2"
+        type="number"
+        placeholder="Enter AppointmentId To Search"
+        aria-label="Search"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="searchAppointmentId"
+      />
+      <button class="btn btn-outline-primary" type="submit">Find</button>
+    </form>
+  </div>
+
+  <div class="row justify-content-center mb-3 mx-auto">
+    <div
+      *ngIf="appointments.length === 0"
+      class="p-3 text-secondary text-center fw-bold mt-5"
+    >
+      No Appointments Found
+    </div>
+    <ul class="col-md-6 list-group overflow-y-scroll" style="max-height: 500px">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-start"
+        *ngFor="let appointment of appointments; index as i"
+      >
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">
+            {{ appointment.appointmentDate | date : "fullDate" }}
+          </div>
+          <p
+            [ngStyle]="{
+              color:
+                appointment.status === 'Scheduled'
+                  ? 'blue'
+                  : appointment.status === 'Pending'
+                  ? 'orange'
+                  : appointment.status === 'Completed'
+                  ? 'green'
+                  : 'red'
+            }"
+          >
+            {{ appointment.status }}
+          </p>
+        </div>
+        <button
+          [routerLink]="[
+            '/appointments/viewDetails',
+            appointment.appointmentId
+          ]"
+          class="btn btn-primary rounded my-auto"
+        >
+          Veiw Details
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

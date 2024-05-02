@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky">
+  <div class="container">
+    <a class="navbar-brand h3" routerLink="/">Tailor-Shop</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      #toggleButton
+      (click)="closeDropDown()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #dropDown>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item mx-2" *ngIf="!isLoggedIn">
+          <a
+            class="nav-link text-sm px-2"
+            aria-current="page"
+            data-bs-toggle="modal"
+            style="cursor: pointer"
+            data-bs-target="#exampleModal"
+            >Login/Register<i class="bi bi-box-arrow-in-left my-auto ms-2"></i
+          ></a>
+        </li>
+        <li
+          class="nav-item mx-2"
+          *ngIf="isLoggedIn"
+          style="cursor: pointer"
+          routerLinkActive="active"
+        >
+          <a
+            class="nav-link px-2"
+            *ngIf="isLoggedIn"
+            [routerLink]="
+              userType === 'ROLE_USER' ? ['/customerHome'] : ['/tailorHome']
+            "
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item mx-2" *ngIf="isLoggedIn" routerLinkActive="active">
+          <a
+            class="nav-link px-2"
+            routerLink="/appointments"
+            aria-current="page"
+            >{{
+              userType == "ROLE_USER"
+                ? "My Appointments"
+                : "Manage Appointments"
+            }}</a
+          >
+        </li>
+        <li
+          class="nav-item mx-2"
+          *ngIf="isLoggedIn && userType == 'ROLE_USER'"
+          routerLinkActive="active"
+        >
+          <a
+            class="nav-link px-2"
+            routerLink="/customerProfile"
+            aria-current="page"
+            >My Profile</a
+          >
+        </li>
+        <li class="nav-item mx-2" routerLinkActive="active">
+          <a class="nav-link px-2" routerLink="/features" aria-current="page"
+            >Features</a
+          >
+        </li>
+        <li class="nav-item mx-2" *ngIf="isLoggedIn">
+          <a
+            class="nav-link px-2"
+            style="cursor: pointer"
+            (click)="logout()"
+            aria-current="page"
+            >Logout<i class="bi bi-box-arrow-in-right"></i
+          ></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
